@@ -666,6 +666,49 @@ h2{
   40% { transform: translateY(-20px); }
   100% { transform: translateY(-600px); opacity: 0; }
 }
+:root {
+
+  --bg-primary: #0F1E46;
+  --bg-secondary: #142A66;
+  --card-bg: #1B3475;
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #C8D2FF;
+  --text-muted: #9FA8DA;
+
+  --accent-primary: #4F8CFF;
+  --accent-hover: #6EA8FF;
+
+  --success: #36D399;
+}
+
+/* Global Background */
+body {
+  background: linear-gradient(135deg,#0F1E46,#142A66);
+  color: var(--text-primary);
+}
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+}
+
+/* Buttons */
+.btn {
+  background: var(--accent-primary);
+  color: white;
+  border-radius: 8px;
+  padding: 12px 18px;
+  transition: 0.3s ease;
+}
+
+.btn:hover {
+  background: var(--accent-hover);
+}
 
 }
+
 
