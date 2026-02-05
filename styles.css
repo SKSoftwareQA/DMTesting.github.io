@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root{
-  /* Stripe/Vercel style tokens */
+  /* Premium dark SaaS theme (Vercel-like) */
   --bg0:#070A12;
   --bg1:#0B1020;
   --bg2:#0E1733;
@@ -11,7 +11,7 @@
   --border:rgba(255,255,255,.12);
 
   --text:#FFFFFF;
-  --text2:rgba(255,255,255,.78);
+  --text2:rgba(255,255,255,.80);
   --text3:rgba(255,255,255,.62);
 
   --blue:#4F8CFF;
@@ -25,9 +25,11 @@
   --r12:12px;
   --r16:16px;
   --r20:20px;
-  --r28:28px;
 
   --max:1160px;
+
+  /* ✅ FIX #1: control hero top gap */
+  --navH:64px;
 }
 
 *{box-sizing:border-box}
@@ -38,8 +40,8 @@ body{
   color:var(--text);
   background:
     radial-gradient(1200px 600px at 20% 10%, rgba(79,140,255,.22), transparent 60%),
-    radial-gradient(900px 500px at 75% 0%, rgba(255,79,216,.12), transparent 55%),
-    radial-gradient(900px 500px at 65% 70%, rgba(54,211,153,.11), transparent 55%),
+    radial-gradient(900px 500px at 80% 0%, rgba(255,79,216,.12), transparent 55%),
+    radial-gradient(900px 500px at 65% 75%, rgba(54,211,153,.11), transparent 55%),
     linear-gradient(180deg, var(--bg0), var(--bg1) 40%, var(--bg2));
   overflow-x:hidden;
 }
@@ -49,29 +51,36 @@ img{max-width:100%;display:block}
 
 .container{width:min(var(--max),92%);margin:0 auto}
 
-/* ---------- NAV ---------- */
+/* NAV */
 .nav{
   position:sticky; top:0; z-index:1000;
+  height:var(--navH);
+  display:flex;
+  align-items:center;
   background:rgba(7,10,18,.62);
   backdrop-filter: blur(14px);
   border-bottom:1px solid rgba(255,255,255,.08);
 }
 .nav-inner{
   display:flex; align-items:center; justify-content:space-between;
-  padding:14px 0;
+  width:100%;
 }
 .brand{
   font-weight:800;
   letter-spacing:-.2px;
-  font-size:16px;
+  font-size:14px;
   color:rgba(255,255,255,.92);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:62vw;
 }
 .brand span{color:var(--blue)}
-.links{display:flex; gap:18px; align-items:center}
+.links{display:flex; gap:14px; align-items:center}
 .links a{
   color:rgba(255,255,255,.75);
-  font-weight:600;
-  font-size:13px;
+  font-weight:700;
+  font-size:12px;
   padding:8px 10px;
   border-radius:999px;
   transition:.25s ease;
@@ -86,7 +95,7 @@ img{max-width:100%;display:block}
   font-size:18px;
 }
 
-/* ---------- BUTTONS ---------- */
+/* BUTTONS */
 .btn{
   display:inline-flex; align-items:center; justify-content:center;
   padding:12px 16px;
@@ -95,32 +104,70 @@ img{max-width:100%;display:block}
   font-size:13px;
   letter-spacing:.2px;
   border:1px solid rgba(255,255,255,.12);
-  background:
-    linear-gradient(180deg, rgba(79,140,255,1), rgba(79,140,255,.86));
+  background: linear-gradient(180deg, var(--blue), rgba(79,140,255,.86));
   box-shadow:0 14px 40px rgba(79,140,255,.22);
   transition: .25s ease;
+  position:relative;
+  overflow:hidden;
 }
+.btn::after{
+  content:"";
+  position:absolute; inset:-2px;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,.20), transparent);
+  transform:translateX(-120%);
+  transition:.6s ease;
+}
+.btn:hover::after{transform:translateX(120%)}
 .btn:hover{transform:translateY(-2px); background:linear-gradient(180deg, var(--blue2), rgba(110,168,255,.86))}
 .btn-ghost{
   background:rgba(255,255,255,.06);
   box-shadow:none;
   color:rgba(255,255,255,.85);
 }
-.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.btn-ghost:hover{background:rgba(255,255,255,.10)}
 .btn-small{padding:10px 12px;border-radius:11px}
 
-/* ---------- HERO ---------- */
+/* HERO */
 .hero{
   position:relative;
-  padding:86px 0 56px;
+  /* ✅ FIX #1: reduce the silly gap at top */
+  padding: 30px 0 56px;
   overflow:hidden;
 }
+
+.hero-bg{position:absolute; inset:0; pointer-events:none}
+.glow{
+  position:absolute;
+  filter: blur(50px);
+  opacity:.55;
+  border-radius:999px;
+  animation: floaty 10s ease-in-out infinite;
+}
+.g1{width:540px;height:540px; left:-160px; top:-180px; background:rgba(79,140,255,.35)}
+.g2{width:480px;height:480px; right:-160px; top:-160px; background:rgba(255,79,216,.20); animation-delay: -2s}
+.g3{width:520px;height:520px; left:30%; bottom:-260px; background:rgba(54,211,153,.18); animation-delay:-4s}
+@keyframes floaty{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(18px)}
+}
+.gridlines{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at 30% 10%, rgba(0,0,0,1), rgba(0,0,0,.1), transparent 70%);
+  opacity:.55;
+}
+
 .hero-grid{
+  position:relative;
   display:grid;
-  grid-template-columns: 1.15fr 1fr;
+  grid-template-columns: 1.12fr 1fr;
   gap:44px;
   align-items:center;
 }
+
 .pill{
   display:inline-flex; gap:8px; align-items:center;
   padding:8px 12px;
@@ -128,15 +175,18 @@ img{max-width:100%;display:block}
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.05);
   color:rgba(255,255,255,.78);
-  font-weight:700;
+  font-weight:800;
   font-size:12px;
+  margin-top:0;
 }
+
 .hero h1{
   margin:14px 0 10px;
-  font-size:48px;
+  font-size:46px;
   line-height:1.05;
   letter-spacing:-1px;
 }
+
 .sub{
   margin:0;
   font-size:15px;
@@ -144,9 +194,10 @@ img{max-width:100%;display:block}
   color:var(--text2);
   max-width:64ch;
 }
+
 .cta-row{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap}
 
-/* Tool “logos” strip */
+/* Logos strip */
 .logos{margin-top:14px}
 .logos-label{color:var(--text3); font-size:12px; font-weight:800; margin-bottom:8px}
 .logos-row{display:flex; flex-wrap:wrap; gap:10px}
@@ -160,7 +211,7 @@ img{max-width:100%;display:block}
   font-weight:800;
 }
 
-/* Proof cards */
+/* Proof */
 .proof{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -173,11 +224,13 @@ img{max-width:100%;display:block}
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.05);
   box-shadow:0 10px 30px rgba(0,0,0,.2);
+  transition:.25s ease;
 }
+.proof-box:hover{transform:translateY(-3px); border-color:rgba(79,140,255,.35)}
 .proof-big{font-weight:900;font-size:18px}
-.proof-small{margin-top:4px;font-size:12px;color:var(--text3);font-weight:700}
+.proof-small{margin-top:4px;font-size:12px;color:var(--text3);font-weight:800}
 
-/* Hero slider card */
+/* Slider */
 .hero-slider .swiper{border-radius:var(--r20)}
 .slide-card{
   border-radius:var(--r20);
@@ -185,6 +238,7 @@ img{max-width:100%;display:block}
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.04);
   box-shadow:var(--shadow2);
+  transform: translateZ(0);
 }
 .slide-card img{
   width:100%;
@@ -194,7 +248,7 @@ img{max-width:100%;display:block}
 }
 .slide-caption{
   padding:12px 14px;
-  color:rgba(255,255,255,.8);
+  color:rgba(255,255,255,.82);
   font-size:12px;
   border-top:1px solid rgba(255,255,255,.08);
   background:rgba(0,0,0,.25);
@@ -206,8 +260,8 @@ img{max-width:100%;display:block}
 .swiper-pagination-bullet{background:rgba(255,255,255,.4)}
 .swiper-pagination-bullet-active{background:white}
 
-/* ---------- SECTIONS ---------- */
-.section{padding:76px 0}
+/* Sections */
+.section{padding:74px 0}
 .section.alt{
   border-top:1px solid rgba(255,255,255,.06);
   border-bottom:1px solid rgba(255,255,255,.06);
@@ -235,10 +289,10 @@ h2{
   background:rgba(255,255,255,.05);
   color:rgba(255,255,255,.78);
   font-size:12px;
-  font-weight:700;
+  font-weight:800;
 }
 
-/* Grids/cards */
+/* Cards & grids */
 .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:18px}
 .grid2{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:18px}
 
@@ -261,23 +315,23 @@ h2{
   border-radius:var(--r16);
   border:1px dashed rgba(255,255,255,.18);
   background:rgba(255,255,255,.05);
-  color:rgba(255,255,255,.85);
-  font-weight:800;
+  color:rgba(255,255,255,.88);
+  font-weight:900;
   font-size:13px;
   transition:.25s ease;
 }
 .file:hover{transform:translateY(-3px); border-color:rgba(79,140,255,.35); background:rgba(255,255,255,.08)}
 
 /* Testimonials */
-#testimonialsSwiper{margin-top:14px; padding-bottom:42px}
-.t-card{height:auto}
-.t-card p{color:rgba(255,255,255,.82); font-size:13px; line-height:1.75}
-.t-meta{margin-top:10px; color:var(--text3); font-size:12px; font-weight:800}
+#testimonialsSwiper{margin-top:14px; padding-bottom:44px}
+.t-meta{margin-top:10px; color:var(--text3); font-size:12px; font-weight:900}
 
-/* Pricing - “Most Popular” */
+/* Pricing */
 .price-big{font-size:34px; font-weight:900; margin:10px 0 8px}
 .price ul{margin:0; padding-left:18px; color:var(--text2); line-height:1.8; font-size:13px}
-.muted{color:var(--text3); font-weight:700; font-size:12px}
+.muted{color:var(--text3); font-weight:800; font-size:12px}
+.small-note{margin-top:18px}
+
 .popular{
   position:relative;
   border-color:rgba(79,140,255,.35);
@@ -292,18 +346,26 @@ h2{
   font-size:11px;
   font-weight:900;
 }
+.price-cta{margin-top:12px}
 
-/* Contact grid */
+/* Contact */
 .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:18px}
 
 /* Footer */
 .footer{
   border-top:1px solid rgba(255,255,255,.08);
-  padding:20px 0 90px; /* leave room for sticky CTA */
+  padding:20px 0 92px;
 }
-.footer-inner{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; color:var(--text3); font-size:12px}
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  color:var(--text3);
+  font-size:12px;
+}
 
-/* ---------- Sticky CTA ---------- */
+/* Sticky CTA */
 .sticky-cta{
   position:fixed;
   left:50%;
@@ -319,7 +381,7 @@ h2{
   gap:12px;
   padding:12px 12px 12px 14px;
   border-radius:18px;
-  background:rgba(7,10,18,.70);
+  background:rgba(7,10,18,.72);
   border:1px solid rgba(255,255,255,.10);
   backdrop-filter: blur(16px);
   box-shadow:var(--shadow);
@@ -334,10 +396,10 @@ h2{
   font-weight:900;
   color:rgba(230,255,245,.95);
 }
-.sticky-text{color:var(--text2); font-size:12px; font-weight:700; line-height:1.35}
+.sticky-text{color:var(--text2); font-size:12px; font-weight:800; line-height:1.35}
 .sticky-text-strong{color:white; font-weight:900}
-
 .sticky-cta-actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+
 .sticky-btn{
   padding:10px 12px;
   border-radius:12px;
@@ -346,6 +408,7 @@ h2{
   font-weight:900;
   font-size:12px;
   transition:.25s ease;
+  cursor:pointer;
 }
 .sticky-btn:hover{transform:translateY(-2px); background:rgba(255,255,255,.10)}
 .sticky-btn-primary{
@@ -366,7 +429,7 @@ h2{
   font-weight:900;
 }
 
-/* ---------- Rocket ---------- */
+/* Rocket */
 .rocket-btn{
   position:fixed;
   right:22px;
@@ -383,21 +446,19 @@ h2{
   transition:.25s ease;
 }
 .rocket-btn:hover{transform:translateY(-2px)}
-.rocket-fire{
-  animation: rocketLaunch .8s ease forwards;
-}
+.rocket-fire{animation: rocketLaunch .85s ease forwards}
 @keyframes rocketLaunch{
   0%{transform:translateY(0); opacity:1}
   40%{transform:translateY(-16px); opacity:1}
   100%{transform:translateY(-700px); opacity:0}
 }
 
-/* ---------- SAFE reveal (only if JS is running) ---------- */
+/* Safe reveal (won’t hide sections if JS fails) */
 .reveal{opacity:1; transform:none}
-.js .reveal{opacity:0; transform:translateY(18px); transition:.6s ease}
-.js .reveal.active{opacity:1; transform:translateY(0)}
+html.js .reveal{opacity:0; transform:translateY(18px); transition:.6s ease}
+html.js .reveal.active{opacity:1; transform:translateY(0)}
 
-/* ---------- Responsive ---------- */
+/* Responsive */
 @media (max-width: 980px){
   .hero-grid{grid-template-columns:1fr; gap:22px}
   .hero h1{font-size:38px}
