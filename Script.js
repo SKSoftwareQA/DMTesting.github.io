@@ -17,7 +17,7 @@ const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 /* =============================
-   HERO SLIDER
+   HERO + TESTIMONIAL SWIPERS
 ============================= */
 document.addEventListener("DOMContentLoaded", () => {
   const heroSwiperEl = document.querySelector("#heroSwiper");
@@ -42,9 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* =============================
-     TESTIMONIAL SLIDER (PRO)
-  ============================= */
   const testimonialsEl = document.querySelector("#testimonialsSwiper");
   if (testimonialsEl) {
     new Swiper("#testimonialsSwiper", {
@@ -74,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* =============================
-   Scroll Reveal
+   Scroll Reveal (safe)
 ============================= */
 const revealEls = document.querySelectorAll(".reveal");
 
@@ -87,6 +84,7 @@ function onReveal() {
 
 window.addEventListener("scroll", onReveal);
 window.addEventListener("load", onReveal);
+document.addEventListener("DOMContentLoaded", onReveal);
 
 /* =============================
    Rocket Scroll To Top
@@ -101,19 +99,92 @@ if (rocket) {
 
   rocket.addEventListener("click", () => {
     rocket.classList.add("launch");
-
     window.scrollTo({ top: 0, behavior: "smooth" });
 
     setTimeout(() => {
       rocket.classList.remove("launch");
-      // re-show button after returning (optional)
       setTimeout(() => rocket.classList.add("show"), 200);
     }, 1200);
   });
 }
 
 /* =============================
-   Premium SaaS Hero Particles (Lightweight)
+   Sticky CTA Bar
+============================= */
+const stickyCta = document.getElementById("stickyCta");
+const stickyClose = document.getElementById("stickyClose");
+const STICKY_KEY = "stickyCtaDismissed";
+
+function updateStickyVisibility() {
+  if (!stickyCta) return;
+  const dismissed = sessionStorage.getItem(STICKY_KEY) === "1";
+  if (dismissed) {
+    stickyCta.classList.remove("show");
+    return;
+  }
+  if (window.scrollY > 420) stickyCta.classList.add("show");
+  else stickyCta.classList.remove("show");
+}
+
+window.addEventListener("scroll", updateStickyVisibility);
+window.addEventListener("load", updateStickyVisibility);
+document.addEventListener("DOMContentLoaded", updateStickyVisibility);
+
+if (stickyClose && stickyCta) {
+  stickyClose.addEventListener("click", () => {
+    sessionStorage.setItem(STICKY_KEY, "1");
+    stickyCta.classList.remove("show");
+  });
+}
+
+/* =============================
+   Animated Counters (start when visible)
+============================= */
+function animateCounter(el, target, decimals) {
+  const duration = 900;
+  const startTime = performance.now();
+
+  function tick(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const value = target * eased;
+    el.textContent = value.toFixed(decimals);
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+(function initCounters() {
+  const counts = document.querySelectorAll(".count");
+  const wrap = document.getElementById("counters");
+  if (!counts.length || !wrap) return;
+
+  let played = false;
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      if (played) return;
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          played = true;
+          counts.forEach((el) => {
+            const target = Number(el.dataset.target || "0");
+            const decimals = Number(el.dataset.decimals || "0");
+            animateCounter(el, target, decimals);
+          });
+          io.disconnect();
+          break;
+        }
+      }
+    },
+    { threshold: 0.35 }
+  );
+
+  io.observe(wrap);
+})();
+
+/* =============================
+   Premium Hero Particles
 ============================= */
 (function heroParticles() {
   const canvas = document.getElementById("heroParticles");
@@ -156,12 +227,10 @@ if (rocket) {
   function draw() {
     ctx.clearRect(0, 0, w, h);
 
-    // dots
     for (const p of particles) {
       p.x += p.vx;
       p.y += p.vy;
 
-      // wrap
       if (p.x < -10) p.x = w + 10;
       if (p.x > w + 10) p.x = -10;
       if (p.y < -10) p.y = h + 10;
@@ -173,7 +242,6 @@ if (rocket) {
       ctx.fill();
     }
 
-    // connect nearby points (subtle)
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const a = particles[i];
@@ -208,4 +276,5 @@ if (rocket) {
   });
 
   window.addEventListener("load", start);
+  document.addEventListener("DOMContentLoaded", start);
 })();
