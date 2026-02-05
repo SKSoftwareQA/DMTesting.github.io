@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>SK Software Testing — Professional QA & Testing Services</title>
 
   <meta
@@ -11,14 +10,12 @@
     content="Freelance QA Engineer providing Manual, Functional, Game, DB, Cloud, Accessibility, AI Agent/ML, Chatbots, API Testing and Mobile testing services. Fast delivery, clear reporting."
   />
 
-  <!-- Enable JS-only animations safely (prevents hidden sections when JS fails) -->
+  <!-- JS-safe reveal: content should NOT disappear if JS fails -->
   <script>
-    document.documentElement.classList.add('js');
+    document.documentElement.classList.add("js");
   </script>
 
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 
@@ -44,9 +41,8 @@
     </div>
   </header>
 
-  <!-- Hero -->
+  <!-- ✅ HERO (ONLY hero content stays inside <main>) -->
   <main id="top" class="hero">
-    <!-- Premium hero effects -->
     <div class="hero-bg" aria-hidden="true">
       <div class="blob blob-1"></div>
       <div class="blob blob-2"></div>
@@ -55,6 +51,7 @@
     </div>
 
     <div class="container hero-grid">
+
       <div class="hero-copy">
         <p class="pill">QA / Software Testing • Remote • IST / EST</p>
 
@@ -70,7 +67,7 @@
           <a class="btn btn-ghost" href="#samples">View Deliverables</a>
         </div>
 
-        <!-- ✅ Logos strip -->
+        <!-- Logos strip -->
         <div class="logos">
           <div class="logos-label">Tools I work with</div>
           <div class="logos-row" aria-label="Tool logos">
@@ -84,7 +81,7 @@
           </div>
         </div>
 
-        <!-- ✅ Counters (animated) -->
+        <!-- Counters -->
         <div class="proof counters" id="counters">
           <div class="proof-box">
             <div class="proof-big">
@@ -113,6 +110,7 @@
       <div class="hero-slider">
         <div class="swiper" id="heroSwiper">
           <div class="swiper-wrapper">
+
             <div class="swiper-slide slide-card">
               <img
                 src="https://drive.google.com/uc?export=view&id=13j9e5DARp_YjL4nLnsM4Aq-sIdegcYZc"
@@ -139,6 +137,7 @@
               />
               <div class="slide-caption">Collaboration with dev teams</div>
             </div>
+
           </div>
 
           <div class="swiper-button-prev" aria-label="Previous slide"></div>
@@ -146,14 +145,16 @@
           <div class="swiper-pagination"></div>
         </div>
       </div>
+
     </div>
   </main>
+  <!-- ✅ END HERO (everything below MUST be outside main) -->
+
 
   <!-- About -->
   <section id="about" class="section reveal">
     <div class="container">
       <h2>About</h2>
-
       <p class="lead">
         I’m a Software Testing professional helping startups and teams improve quality with structured test planning,
         fast execution, and actionable bug reporting.
@@ -287,7 +288,6 @@
           <div class="muted">Delivery: same day – 72 hours</div>
         </div>
 
-        <!-- ✅ Most Popular -->
         <div class="card price popular">
           <div class="popular-badge">Most Popular</div>
           <h3>Starter Package</h3>
@@ -374,12 +374,12 @@
     </div>
   </div>
 
-  <!-- Rocket button -->
+  <!-- Rocket -->
   <button class="rocket-btn" id="rocketBtn" aria-label="Scroll to top">🚀</button>
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <!-- IMPORTANT: ensure filename matches exactly: script.js -->
+
+  <!-- IMPORTANT: filename must be EXACTLY "script.js" -->
   <script src="script.js"></script>
 </body>
 </html>
